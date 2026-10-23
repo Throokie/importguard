@@ -5,6 +5,7 @@ import socket
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from importguard import InputError, VERSION, analyze, export_bundle, inspect
+from localization import error_payload, request_language, format_message
 
 ROOT = Path(__file__).resolve().parent
 MAX_REQUEST = 15 * 1024 * 1024
@@ -54,63 +55,73 @@ class Handler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionResetError):
             pass
 
+    def fail(self, status, code, **params):
+        return self.send(status, error_payload(InputError(code, **params), self.language))
+
     def do_GET(self):
+        self.language = request_language(accept_language=self.headers.get("Accept-Language"))
         if not self.valid_host():
-            return self.send(403, {"error": "只接受本机回环地址。"})
+            return self.fail(403, "http.loopback")
         routes = {"/": ("index.html", "text/html; charset=utf-8"), "/app.js": ("app.js", "text/javascript; charset=utf-8"),
-                  "/style.css": ("style.css", "text/css; charset=utf-8")}
+                  "/style.css": ("style.css", "text/css; charset=utf-8"),
+                  "/i18n.json": ("i18n.json", "application/json; charset=utf-8"),
+                  "/messages.json": ("messages.json", "application/json; charset=utf-8")}
         if self.path == "/api/demo":
             return self.send(200, demo())
         if self.path == "/api/health":
             return self.send(200, {"status": "ok", "version": VERSION, "storage": "memory only", "bind": "127.0.0.1"})
         if self.path not in routes:
-            return self.send(404, {"error": "页面不存在。"})
+            return self.fail(404, "http.not_found")
         filename, content_type = routes[self.path]
         self.send(200, (ROOT / "static" / filename).read_bytes(), content_type)
 
     def do_POST(self):
+        self.language = request_language(accept_language=self.headers.get("Accept-Language"))
         if not self.valid_host():
-            return self.send(403, {"error": "只接受本机回环地址。"})
+            return self.fail(403, "http.loopback")
         accepted = (self.origin(), f"http://localhost:{self.server.server_port}")
         if self.headers.get("Origin") and self.headers["Origin"] not in accepted:
-            return self.send(403, {"error": "拒绝其他网站的请求。请直接打开本机页面。"})
+            return self.fail(403, "http.origin")
         if self.headers.get("Content-Type", "").split(";")[0].strip() != "application/json":
-            return self.send(415, {"error": "请使用JSON请求。"})
+            return self.fail(415, "http.json")
         if self.headers.get("Transfer-Encoding"):
-            return self.send(400, {"error": "不支持分块请求。"})
+            return self.fail(400, "http.chunked")
         try:
             length = int(self.headers.get("Content-Length", "0"))
             if length <= 0 or length > MAX_REQUEST:
-                return self.send(413, {"error": "请求为空或过大；每份CSV最多5 MiB。"})
+                return self.fail(413, "http.size")
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
             if not isinstance(payload, dict):
-                raise InputError("请求须为JSON对象。")
+                raise InputError("http.object")
+            self.language = request_language(payload, self.headers.get("Accept-Language"))
+            payload = payload | {"language": self.language}
             if self.path == "/api/inspect":
                 return self.send(200, inspect(payload.get("file"), payload.get("config")))
             if self.path == "/api/analyze":
                 return self.send(200, analyze(payload))
             if self.path == "/api/export":
                 return self.send(200, export_bundle(payload), "application/zip", "importguard-review.zip")
-            return self.send(404, {"error": "接口不存在。"})
+            return self.fail(404, "http.endpoint")
         except (InputError, ValueError, UnicodeDecodeError, KeyError, TypeError, OverflowError) as exc:
-            self.send(400, {"error": str(exc) or "输入无效，请检查CSV和字段设置。"})
+            self.send(400, error_payload(exc, self.language))
         except (TimeoutError, socket.timeout):
-            self.send(408, {"error": "读取超时，请重新选择文件。"})
+            self.fail(408, "http.timeout")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="启动本机ImportGuard，不保存上传数据。")
+    parser = argparse.ArgumentParser(description="Start local ImportGuard. Uploaded data is never stored.")
     parser.add_argument("--port", type=int, default=8767)
+    parser.add_argument("--language", choices=("en", "zh-CN"), default="en", help="Console message language")
     args = parser.parse_args()
     try:
         server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     except OSError as exc:
-        parser.exit(2, f"无法启动：{exc}；如端口占用，请用 --port 其他端口。\n")
-    print(f"ImportGuard {VERSION}: http://127.0.0.1:{server.server_port}\n只在本机内存处理。按 Ctrl+C 停止。", flush=True)
+        parser.exit(2, format_message("cli.server_start_failed", {"detail": str(exc)}, args.language) + "\n")
+    print(f"ImportGuard {VERSION}: http://127.0.0.1:{server.server_port}\n" + format_message("cli.server_ready", language=args.language), flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n已停止。")
+        print("\n" + format_message("cli.server_stopped", language=args.language))
     finally:
         server.server_close()
 

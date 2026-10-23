@@ -2,6 +2,10 @@
 
 The review ZIP is an import aid, not an instruction to bypass destination validation. Use the destination's preview, then verify final counts and totals. [Actual Budget's observed second-import limitation](actual-budget.md) also applies when a row was explicitly included here.
 
+## Language
+
+Version 0.3 uses the selected interface language for `README.txt`, review reasons and manifest/audit warnings. CLI exports default to English (`--language zh-CN` selects Chinese). Structured records include the chosen `language` plus stable message codes and parameters where appropriate. All import CSV headers, original transaction values and numerical amounts remain unchanged by language selection; `review.csv` reasons are presentation text and do change.
+
 ## Layout version 2
 
 `import-manifest.json` is the entry point. A single account/currency group has root-level `ready_rows.csv` and `normalized_rows.csv`; multiple groups have `accounts/gNNN_<hash>_<currency>/` directories. Account names never directly form export paths. Case and whitespace normalize, so `Main` and ` main ` share an account key. Different punctuation remains distinct.

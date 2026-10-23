@@ -10,9 +10,18 @@
 
 <p align="center"><a href="#quick-start">Quick start</a> · <a href="#what-you-get">Features</a> · <a href="docs/actual-budget.md">Actual Budget findings</a> · <a href="README.zh-CN.md">简体中文</a></p>
 
+![ImportGuard in English with the language selector, local CSV inputs and column mappings](docs/assets/interface-en.png)
+
+<p align="center"><b>English / 简体中文</b> · Change language at any time without losing files, mappings or review decisions. <a href="docs/assets/interface-zh.png">Chinese interface</a></p>
+
+<details>
+<summary>Watch the 21-second workflow demo (v0.2 Chinese interface)</summary>
+
 ![ImportGuard demo: load synthetic statements, inspect overlaps, retain two real purchases, and export a review bundle](docs/assets/demo.gif)
 
-<p align="center"><sub>Edited steps from actual UI operations using the included synthetic CSVs. The current interface is in Simplified Chinese. <a href="docs/assets/demo.mp4">MP4 version</a> · <a href="docs/assets/review.png">Full-size screenshot</a></sub></p>
+The approved v0.2 walkthrough uses synthetic CSVs and edited screenshots. Version 0.3 adds the language selector and translates the same workflow. [MP4 version](docs/assets/demo.mp4) · [English review screenshot](docs/assets/review-en.png).
+
+</details>
 
 > [!IMPORTANT]
 > **The destination app makes its own import decisions.** In Actual Budget 26.10.0, two ID-less purchases with the same date, amount and payee, imported in separate batches, resulted in only one saved transaction in our isolated API tests—even when the second was explicitly included in ImportGuard. Stable-ID cases passed only with an explicit API `imported_id` mapping. The GUI mapping workflow was not tested. [Read the exact scope and results.](docs/actual-budget.md)
@@ -33,17 +42,23 @@ cd importguard
 python3 server.py
 ```
 
-Open **http://127.0.0.1:8767** and click **用模拟账单试一遍** (“Try sample statements”). Press **Ctrl+C** in the terminal to stop.
+Open **http://127.0.0.1:8767** and click **Try sample statements**. Press **Ctrl+C** in the terminal to stop.
 
 On Windows, run `py server.py` or double-click `start.bat` if the Python launcher is installed. On Linux/macOS, `sh start.sh` is also available. Linux is the locally tested environment; the other launch paths have not been manually validated. If the port is busy, run `python3 server.py --port 8877` and open the printed address.
+
+### Choose your language
+
+Use **Language** in the header to switch between **English** and **简体中文**. Your first visit follows the browser language (Chinese for `zh`, English otherwise); a saved selection takes priority. Switching translates controls, accessibility labels, row evidence, current errors and export instructions **without re-running the check or clearing your files, mappings, filters or decisions**.
+
+Only the language preference is saved in browser storage. Restricted storage does not stop the app from working. Transaction descriptions, account names, notes, original column headers and amounts are never translated. Imported CSV columns and numeric values stay the same in both languages.
 
 ### A complete sample in one minute
 
 1. Load the built-in samples: **6 existing** and **11 incoming** transactions.
 2. Confirm the column mappings, date format, amount direction, account and currency. The sample uses a shared ID system; only confirm that option for your own files when it is true.
-3. Click **检查导入重叠** (“Check overlaps”). The sample has **5 new, 1 duplicate, 4 to review, and 1 invalid** row.
+3. Click **Check overlaps**. The sample has **5 new, 1 duplicate, 4 to review, and 1 invalid** row.
 4. Exclude source row 3. Include rows 6 and 7 to retain both same-day purchases. The selection becomes **7 included, 2 excluded, 2 pending**.
-5. Click **下载复核包** (“Download review bundle”). Read `import-manifest.json` and use the separate account/currency files. Pending and invalid rows stay out of the import files.
+5. Click **Download review bundle**. Read `import-manifest.json` and use the separate account/currency files. Pending and invalid rows stay out of the import files.
 
 The download contains **Main/USD**, **Travel/USD**, and **Main/GBP** groups. Review the destination's preview and final transaction counts before relying on the result.
 
@@ -56,6 +71,7 @@ The download contains **Main/USD**, **Travel/USD**, and **Main/GBP** groups. Rev
 | Account and currency separation | Each import file contains one normalized account/currency combination. |
 | Explicit parsing | Select date order, decimal mark, signed or split amounts, encoding and field mappings. |
 | An audit trail | Keep input fingerprints, row decisions, original fields and export adjustments. |
+| English and Simplified Chinese | Switch in place; row reasons, errors and export instructions follow the selected language. |
 | Browser UI and CLI | Review interactively or generate a bundle from explicit configuration. |
 
 ### How decisions work
@@ -97,7 +113,7 @@ For a single group, `ready_rows.csv` and `normalized_rows.csv` appear at the roo
 - CSV contents are sent from your browser to a Python process on **your own machine**, over loopback. This is a local client/server app.
 - The server binds to `127.0.0.1`, processes uploads in memory, and does not save uploaded CSVs or log transactions. Your downloaded review ZIP contains the selected data and audit information.
 - No analytics, external fonts, bank integrations, model calls, or third-party JavaScript are loaded by the application. The badges on this GitHub README are separate external images.
-- Refreshing or closing the page loses the current selection. There is no saved-session restore feature.
+- Refreshing or closing the page loses the current files and review decisions. Only `importguard.language` is saved; there is no saved-session restore feature.
 - Formula-like text is escaped for spreadsheet safety, so some exported text fields can differ from the source. The audit retains the original values.
 
 **Keep this service on loopback.** It is not a public hosting or multi-user deployment. These are implementation boundaries, not an independent security audit.
@@ -118,10 +134,10 @@ python3 importguard.py \
   --existing examples/existing.csv \
   --incoming examples/incoming.csv \
   --config examples/config.json \
-  --output review.zip
+  --output review.zip --language en
 ```
 
-The CLI refuses to overwrite an existing ZIP. Configuration contains field mappings, date/amount settings, default context, matching options and row decisions. Decision keys are source line numbers as strings; a quoted multiline CSV record uses its ending physical line. See [`examples/config.json`](examples/config.json).
+The CLI defaults to English; pass `--language zh-CN` for Chinese instructions. The CLI refuses to overwrite an existing ZIP. Configuration contains field mappings, date/amount settings, default context, matching options and row decisions. Decision keys are source line numbers as strings; a quoted multiline CSV record uses its ending physical line. See [`examples/config.json`](examples/config.json).
 
 ## Development
 
@@ -129,7 +145,7 @@ The CLI refuses to overwrite an existing ZIP. Configuration contains field mappi
 python3 -m unittest discover -s tests -v
 ```
 
-Tests use synthetic data. The publication candidate passed **62 local synthetic-data tests** on Linux / Python 3.14.8. It has locally exercised Python logic, HTTP boundaries, account-separated exports, browser decisions and a real browser download. This is **an early-stage tool**, without real-bank-format acceptance, customer validation or a compatibility guarantee. [Validation scope and known limits](docs/validation.md) distinguish local checks from the partial Actual Budget tests.
+Tests use synthetic data. The publication candidate passed **73 local synthetic-data tests** on Linux / Python 3.14.8. It has locally exercised Python logic, HTTP boundaries, account-separated exports, browser decisions and a real browser download. This is **an early-stage tool**, without real-bank-format acceptance, customer validation or a compatibility guarantee. [Validation scope and known limits](docs/validation.md) distinguish local checks from the partial Actual Budget tests.
 
 Bug reports and improvements are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) and **replace all real financial information with synthetic examples**. The [roadmap](docs/roadmap.md) lists possible next steps without promising delivery dates.
 

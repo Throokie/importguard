@@ -2,7 +2,7 @@
 
 These are candidate directions, without release dates or compatibility promises.
 
-- English interface, with a proper language selector rather than translated screenshots.
+- Shipped in v0.3: English / Simplified Chinese switch, localized reasons/errors/exports, with preserved review state.
 - More synthetic bank-format fixtures, contributed without personal information.
 - Reproducible target-adapter harnesses that fix version, mappings, retry behavior and expectations.
 - Explicit session import/export so a downloaded audit could restore review work.

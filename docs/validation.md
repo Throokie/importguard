@@ -2,14 +2,14 @@
 
 This is an early-stage, locally operated tool. Tests use synthetic data. Passing checks do not establish real-bank compatibility, customer acceptance, or an independent security audit.
 
-Publication candidate, 2026-10-23: **62/62 local tests passed** on Linux / Python 3.14.8. This includes the existing 50 logic/HTTP tests and 12 account-export checks made portable in this repository.
+Publication candidate, 2026-10-23: **73/73 local tests passed** on Linux / Python 3.14.8. This includes the existing 50 logic/HTTP tests 12 account-export checks, and 11 language/catalog/thread-isolation checks. The bilingual browser scenario passed 23 checks including in-place switching, saved and blocked preferences, both ZIP downloads, nested error translation and 390px layouts.
 
 ## Local application
 
 - The packaged Python logic and HTTP suite is runnable with `python3 -m unittest discover -s tests -v`.
 - Account-separated exports were checked against a fixed 11-row input, five account/currency groups, selected-line conservation, per-currency totals, path safety and single-account compatibility.
 - A real Chromium browser loaded the sample CSVs, ran the checks, changed row decisions and downloaded an actual ZIP. The download was opened and checked; the demo images are from that UI.
-- The README GIF is an edited sequence of real screenshots, held long enough to read. It does not demonstrate real-time processing speed.
+- Version 0.3 screenshots show both language interfaces. The retained v0.2 README GIF is an edited sequence of real screenshots, held long enough to read. It does not demonstrate real-time processing speed.
 - A narrow 390px viewport was inspected. Wide results tables support horizontal scrolling.
 
 The built-in scenario has 6 historical and 11 incoming rows: 5 new, 1 duplicate, 4 review, 1 invalid. Exclude source line 3 and include lines 6/7 to reach 7 included, 2 excluded, 2 pending, split across three account/currency groups.

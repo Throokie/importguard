@@ -4,7 +4,9 @@
 
 [English](README.md) · [导出格式](docs/export-format.md) · [Actual验证范围](docs/actual-budget.md)
 
-![真实界面步骤演示：加载模拟CSV、检查重叠、保留两笔消费、分账户导出](docs/assets/demo.gif)
+![中文界面与语言切换入口](docs/assets/interface-zh.png)
+
+[查看英文界面](docs/assets/interface-en.png) · [原0.2版21秒操作GIF](docs/assets/demo.gif) · [MP4](docs/assets/demo.mp4)
 
 > **已确认限制：** Actual Budget 26.10.0中，无稳定ID、日期/金额/名称相同的两笔真实消费，分两次导入可能只保存一笔；ImportGuard人工选“加入”也不能保证目标新增。稳定ID案例只在本轮适配器显式映射API `imported_id` 时通过，完整GUI字段映射未验。导入前看目标预览，导入后核笔数与合计。
 
@@ -20,6 +22,12 @@ python3 server.py
 
 打开 **http://127.0.0.1:8767**。按Ctrl+C停止。Windows可用`py server.py`或已有Python launcher时双击`start.bat`；Linux/macOS可用`sh start.sh`。本机实际验证为Linux，Windows/macOS启动入口未手工验收。端口被占用时用`python3 server.py --port 8877`，再打开打印出的地址。
 
+## 中英文切换
+
+页头“语言 / Language”可选择English或简体中文。首次跟随浏览器语言，之后优先使用手动选择。切换时保留文件、字段映射、筛选、检查结果和人工决定，不重新检查；按钮、可访问标签、依据、当前错误及导出说明同步换语言。
+
+浏览器只保存`importguard.language`语言偏好，不保存交易、文件或审查决定；存储被禁用时仍可使用。用户的交易原文、账户、备注、原表头和金额不翻译，中英文导出的导入CSV字段及数值保持一致。
+
 ## 一分钟试用
 
 1. 点“用模拟账单试一遍”：6笔历史、11笔待导入。全部为合成数据。
@@ -28,7 +36,7 @@ python3 server.py
 4. 第3行选“排除”；第6、7行都选“加入新增”，保留两笔真实消费。变成7加入、2排除、2待定。
 5. 下载复核包。先读`import-manifest.json`，选择Main/USD、Travel/USD、Main/GBP各自文件，逐账户导入。待定和无效行不进入新增文件。
 
-GIF由真实界面操作后截图剪辑而成，按步骤停留以方便阅读；不把它当连续实时速度展示。
+所链接GIF是已确认的0.2版中文流程；0.3版新增语言切换，未重做这段历史演示。GIF由真实界面操作后截图剪辑而成，按步骤停留以方便阅读；不把它当连续实时速度展示。
 
 ## 决定与导出
 
@@ -48,12 +56,12 @@ GIF由真实界面操作后截图剪辑而成，按步骤停留以方便阅读�
 - 缺账户/币种列时必须填默认值。账户名只归一大小写与空白；实际不同账户应使用可区分名称。
 - 仅比较所提供历史范围；不支持拆分/组合匹配、跨币种换算、银行同步、OCR或直接改账本。未做独立安全审计、真实银行格式验收或客户验证。
 
-本发布候选在Linux / Python 3.14.8下62项合成数据检查通过，包括12项可独立运行的分账户导出检查；不把本机通过等同于远端CI或完整目标兼容通过。
+本发布候选在Linux / Python 3.14.8下73项合成数据检查通过，包括12项分账户导出及11项语言/并发/词典检查；不把本机通过等同于远端CI或完整目标兼容通过。
 
 ## 命令行与开发
 
 ```sh
-python3 importguard.py --existing examples/existing.csv --incoming examples/incoming.csv --config examples/config.json --output review.zip
+python3 importguard.py --existing examples/existing.csv --incoming examples/incoming.csv --config examples/config.json --output review.zip --language zh-CN
 python3 -m unittest discover -s tests -v
 ```
 
