@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ImportGuard · 账单导入前检查</title><link rel="stylesheet" href="/style.css"><script defer src="/app.js"></script></head>
+<body>
+<header><a class="brand" href="/" aria-label="ImportGuard首页"><span class="brand-icon" aria-hidden="true">▥</span>ImportGuard</a><div class="local"><span aria-hidden="true"></span>本机处理，无需账号</div><button id="clear" class="quiet">清空会话</button></header>
+<main>
+  <section class="intro"><div><h1>先看清重叠，再导入账单。</h1><p>把已有账本和待导入 CSV 放在一起检查。每一笔新增、重叠和疑问都有依据。</p></div><button id="demo" class="secondary">用模拟账单试一遍</button></section>
+  <div id="message" role="status" aria-live="polite" hidden></div>
+  <section aria-labelledby="files-title"><div class="section-head"><h2 id="files-title"><span class="step">1</span>选择两份 CSV</h2><p>每份最多 5 MiB / 20,000 行；文件只在本机内存中处理</p></div>
+    <div class="sources"><article id="existing-panel" class="source"></article><article id="incoming-panel" class="source"></article></div>
+  </section>
+  <section class="check-settings" aria-labelledby="settings-title"><div><h2 id="settings-title"><span class="step">2</span>确认检查方式</h2><p>账户名和币种必须能对应；默认只提示候选，不凭金额相同自动排除。</p></div>
+    <div class="options"><label class="window">日期前后容差 <select id="day-window"><option value="0">仅同一天</option><option value="1">1 天</option><option value="2">2 天</option><option value="3" selected>3 天</option><option value="7">7 天</option></select></label><label class="checkbox"><input id="trust-ids" type="checkbox"><span>我确认两份文件的交易 ID 来自同一标识体系。只有唯一 ID 与日期、金额、账户和币种一致时，自动判为已有。</span></label></div>
+    <div class="runline"><p id="run-hint">请先选择两份文件并确认字段映射。</p><button id="analyze" class="primary" disabled>检查导入重叠</button></div>
+  </section>
+  <section id="results" aria-labelledby="result-title" hidden>
+    <div class="section-head"><div><h2 id="result-title"><span class="step">3</span>逐笔复核与导出</h2><p id="result-description"></p></div><button id="export" class="primary">下载复核包</button></div>
+    <div id="counts" class="counts"></div>
+    <div class="review-guide"><strong id="decision-count"></strong><span>待定和无效行不会进入新增文件。下载包含新增 CSV、复核清单及全部行的审计记录。</span></div>
+    <div id="export-scope" class="export-scope" aria-live="polite"></div>
+    <div class="toolbar"><label>显示 <select id="filter"><option value="all">全部记录</option><option value="review">需要复核</option><option value="new">可新增</option><option value="duplicate">已有记录</option><option value="invalid">格式无效</option><option value="pending">尚未决定</option></select></label><label class="search-label">查找 <input id="search" type="search" placeholder="名称、账户或行号" autocomplete="off"></label><span id="filtered-count"></span></div>
+    <div class="table-scroll" tabindex="0" aria-label="逐行检查结果，可横向滚动"><table><thead><tr><th>源行 / 状态</th><th>日期 / 账户</th><th>名称 / 检查依据</th><th class="money">金额</th><th>处理决定</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="pager"><button id="previous" class="quiet">上一页</button><span id="page-label"></span><button id="next" class="quiet">下一页</button></div>
+    <details class="audit-info"><summary>检查覆盖与输入指纹</summary><pre id="audit"></pre><p>只比较你提供的历史范围；无法发现未导出的历史、拆分交易或跨币种换算。候选最多显示 5 条，完整候选数量另列。姓名相同也不能证明同一笔交易。</p></details>
+  </section>
+  <footer><p>ImportGuard 0.2 · 导入辅助工具，不回写账本。请保留原 CSV 与账本备份，并在目标应用中先小批预览。</p><p>不接银行、不使用外部模型、无统计追踪。关闭或刷新页面会失去当前选择；下载复核包可保留审计记录。</p></footer>
+</main>
+</body></html>

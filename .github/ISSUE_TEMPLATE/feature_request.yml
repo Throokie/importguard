@@ -1,0 +1,14 @@
+name: Feature request
+description: Explain a real import-review use case.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested behavior and alternatives
+      description: Include target version and import workflow if a ledger integration is involved. Use synthetic data only.

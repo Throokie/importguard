@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a problem using synthetic CSV data only.
+body:
+  - type: markdown
+    attributes:
+      value: "Do not share real transactions, bank statements, credentials or personal data. Replace them with a minimal synthetic example."
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps and synthetic example
+      description: Include column mappings, date format, amount settings and account/currency context.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Version and environment
+      description: ImportGuard version, Python version, operating system and browser.
+    validations:
+      required: true

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+<title id="title">ImportGuard</title><desc id="desc">Review overlapping CSVs before importing into your ledger. Local processing, human decisions, account-separated exports.</desc>
+<rect width="1280" height="360" rx="16" fill="#102d42"/>
+<path d="M920 0V360M1000 0V360M1080 0V360M1160 0V360M1240 0V360M880 70H1280M880 150H1280M880 230H1280M880 310H1280" stroke="#23495c"/>
+<rect x="68" y="59" width="54" height="54" rx="10" fill="#59d4ba"/>
+<path d="M82 75H108M82 86H108M82 97H98" stroke="#102d42" stroke-width="4"/>
+<text x="140" y="100" fill="#f0fafc" font-family="Arial,sans-serif" font-size="47" font-weight="700" letter-spacing="-1">ImportGuard</text>
+<text x="68" y="176" fill="#f0fafc" font-family="Arial,sans-serif" font-size="38" font-weight="700">Review first.</text>
+<text x="68" y="223" fill="#a5c0cf" font-family="Arial,sans-serif" font-size="27">Keep control of what enters your ledger.</text>
+<text x="68" y="299" fill="#64d7c0" font-family="Arial,sans-serif" font-size="18" letter-spacing="2">LOCAL CSV CHECKS  /  HUMAN DECISIONS  /  ACCOUNT-SAFE EXPORTS</text>
+<rect x="945" y="86" width="244" height="197" rx="12" fill="#eaf2f7"/>
+<path d="M962 125H1170M962 167H1170M962 209H1170M1010 101V261M1091 101V261" stroke="#bdcfdc" stroke-width="2"/>
+<circle cx="980" cy="146" r="8" fill="#226347"/><circle cx="980" cy="188" r="8" fill="#bb790b"/><circle cx="980" cy="230" r="8" fill="#226347"/>
+<path d="M1027 146H1074M1027 188H1074M1027 230H1074M1109 146H1152M1109 188H1152M1109 230H1152" stroke="#56768d" stroke-width="5" stroke-linecap="round"/>
+</svg>

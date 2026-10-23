@@ -1,0 +1,58 @@
+{
+  "existing": {
+    "name": "existing-new.csv",
+    "content": "RGF0ZSxQYXllZSxBbW91bnQsQ3VycmVuY3ksQWNjb3VudCxJRCxOb3Rlcw0K"
+  },
+  "incoming": {
+    "name": "incoming-new.csv",
+    "content": "RGF0ZSxQYXllZSxBbW91bnQsQ3VycmVuY3ksQWNjb3VudCxJRCxOb3Rlcw0KMjAyNi0xMC0yMCxTaGFyZWQgc2hvcCwtMTAuMDAsVVNELE1haW4sc2FtZS1hY3Jvc3MtYWNjb3VudHMsc2FtZSBhbW91bnQgYW5vdGhlciBhY2NvdW50DQoyMDI2LTEwLTIwLFNoYXJlZCBzaG9wLC0xMC4wMCxVU0QsU2F2aW5ncyxzYW1lLWFjcm9zcy1hY2NvdW50cyxrZWVwIGRpc3RpbmN0DQoyMDI2LTEwLTIwLFNoYXJlZCBzaG9wLC0xMC4wMCxFVVIsTWFpbixzYW1lLWFjcm9zcy1hY2NvdW50cyxrZWVwIG90aGVyIGN1cnJlbmN5DQoyMDI2LTEwLTIxLFNtYWxsIGNyZWRpdCwwLjEwLFVTRCxNYWluLGNyZWRpdC1hLGV4YWN0IGRlY2ltYWxzDQoyMDI2LTEwLTIyLFNtYWxsIGNyZWRpdCwwLjIwLFVTRCwgbWFpbiAsY3JlZGl0LWIsYWxpYXMgc2FtZSBpZGVudGl0eQ0KMjAyNi0xMC0yMyzot6/lvoTmtojotLksLTcuMDAsQ05ZLC4uL1NhdmluZ3M65Y2x6ZmpLHBhdGgtaWQsZG8gbm90IHVzZSBhY2NvdW50IGFzIHBhdGhuYW1lDQoyMDI2LTEwLTI0LOS5puW6lywtMi4wMCxVU0Qs5Li76JClL+e+juWFgyxjbi1pZCx1bmljb2RlIGFjY291bnQNCjIwMjYtMTAtOTksaW52YWxpZCwtMTAwLjAwLFVTRCxNYWluLGJhZCxkbyBub3QgaW5jbHVkZQ0KMjAyNi0xMC0yNixFeGNsdWRlZCBwdXJjaGFzZSw5OS4wMCxVU0QsTWFpbixvbWl0LGV4cGxpY2l0IGV4Y2x1ZGUNCjIwMjYtMTAtMjcsVHdvIGNvZmZlZXMsLTMuMDAsVVNELE1haW4sY29mZmVlLWEsZ2VudWluZSByZXBlYXRlZCBwdXJjaGFzZQ0KMjAyNi0xMC0yNyxUd28gY29mZmVlcywtMy4wMCxVU0QsTWFpbixjb2ZmZWUtYixyZXRhaW4gYm90aA0K"
+  },
+  "existing_config": {
+    "mapping": {
+      "date": "Date",
+      "payee": "Payee",
+      "amount": "Amount",
+      "currency": "Currency",
+      "account": "Account",
+      "id": "ID",
+      "notes": "Notes"
+    },
+    "date_format": "iso",
+    "decimal_mark": ".",
+    "amount_mode": "signed",
+    "default_account": "",
+    "default_currency": "",
+    "delimiter": ",",
+    "encoding": "utf-8-sig",
+    "invert": false
+  },
+  "incoming_config": {
+    "mapping": {
+      "date": "Date",
+      "payee": "Payee",
+      "amount": "Amount",
+      "currency": "Currency",
+      "account": "Account",
+      "id": "ID",
+      "notes": "Notes"
+    },
+    "date_format": "iso",
+    "decimal_mark": ".",
+    "amount_mode": "signed",
+    "default_account": "",
+    "default_currency": "",
+    "delimiter": ",",
+    "encoding": "utf-8-sig",
+    "invert": false
+  },
+  "options": {
+    "day_window": 3,
+    "trust_ids": true
+  },
+  "decisions": {
+    "9": "pending",
+    "10": "exclude",
+    "11": "include",
+    "12": "include"
+  }
+}

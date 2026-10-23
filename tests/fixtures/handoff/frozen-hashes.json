@@ -1,0 +1,8 @@
+{
+  "new-input.json": "8a13e571338a6c2592442a4dcc11b650cbb622ad766afb677bee824ec2df742c",
+  "expected-before.json": "06ba2d8a3d9225921ba891d5c8297d90b6d2189b22bfd520b233ea44804bdae4",
+  "incoming-new.csv": "e65d6a8280f1cd4fc8d5807f19b42797a94d02f144d2f4e760253ad85e0ead0b",
+  "single-ready-v0.1.csv": "6ef23694775deaa24e9ea1e0ee3a7d7c5beacff847061fe229542c12e456428f",
+  "existing-new.csv": "b7fa8fc80da305d330084132c5f637d3d0f0c571fa605ff68718ddcd3aa6f9ed",
+  "single-normalized-v0.1.csv": "f14a92830cff347b11c195445f035e5e6cc154af2fb41a6040b333122546764b"
+}

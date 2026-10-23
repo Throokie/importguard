@@ -1,0 +1,12 @@
+Date,Payee,Amount,Currency,Account,ID,Notes
+2026-10-20,Shared shop,-10.00,USD,Main,same-across-accounts,same amount another account
+2026-10-20,Shared shop,-10.00,USD,Savings,same-across-accounts,keep distinct
+2026-10-20,Shared shop,-10.00,EUR,Main,same-across-accounts,keep other currency
+2026-10-21,Small credit,0.10,USD,Main,credit-a,exact decimals
+2026-10-22,Small credit,0.20,USD, main ,credit-b,alias same identity
+2026-10-23,路径消费,-7.00,CNY,../Savings:危险,path-id,do not use account as pathname
+2026-10-24,书店,-2.00,USD,主营/美元,cn-id,unicode account
+2026-10-99,invalid,-100.00,USD,Main,bad,do not include
+2026-10-26,Excluded purchase,99.00,USD,Main,omit,explicit exclude
+2026-10-27,Two coffees,-3.00,USD,Main,coffee-a,genuine repeated purchase
+2026-10-27,Two coffees,-3.00,USD,Main,coffee-b,retain both

@@ -1,0 +1,12 @@
+Date,Description,Amount,Currency,Account,Transaction ID,Memo
+2026-10-10,COFFEE SHOP CARD 1234,-5.00,USD,Main,tx-101,Exact ID overlap
+2026-10-11,Supermarket,-42.30,USD,Main,,No shared ID
+2026-10-13,Payroll,2500.00,USD,Main,tx-103,Date changed
+2026-10-15,New Restaurant,-31.20,USD,Main,tx-105,New purchase
+2026-10-16,Corner shop,-8.00,USD,Main,,Two genuine purchases or duplicate export
+2026-10-16,Corner shop,-8.00,USD,Main,,Retain both until reviewed
+2026-10-17,Freelance,350.00,USD,Main,tx-106,New income
+2026-10-10,Coffee Shop,-5.00,USD,Travel,travel-1,Different account
+2026-10-10,Coffee Shop,-5.00,GBP,Main,gbp-1,Different currency
+2026-10-99,Broken date,-4.20,USD,Main,,Invalid date retained
+2026-10-18,"=HYPERLINK(""https://example.invalid"")",-12.00,USD,Main,tx-107,Formula-like text escaped at export

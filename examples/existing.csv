@@ -1,0 +1,7 @@
+Date,Payee,Amount,Currency,Account,ID,Notes
+2026-10-10,Coffee Shop,-5.00,USD,Main,tx-101,Synced
+2026-10-11,Supermarket,-42.30,USD,Main,tx-102,Synced
+2026-10-12,Payroll,2500.00,USD,Main,tx-103,Salary
+2026-10-13,Bus,-2.50,USD,Main,,Manual
+2026-10-14,Book shop,-19.90,USD,Main,tx-104,Synced
+2026-10-10,Coffee Shop,-5.00,EUR,Euro,eu-1,Other currency

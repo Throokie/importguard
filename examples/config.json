@@ -1,0 +1,12 @@
+{
+  "existing_config": {
+    "mapping": {"date":"Date","payee":"Payee","amount":"Amount","currency":"Currency","account":"Account","id":"ID","notes":"Notes"},
+    "date_format":"iso","decimal_mark":".","amount_mode":"signed","invert":false,"default_account":"Main","default_currency":"USD","delimiter":",","encoding":"utf-8-sig"
+  },
+  "incoming_config": {
+    "mapping": {"date":"Date","payee":"Description","amount":"Amount","currency":"Currency","account":"Account","id":"Transaction ID","notes":"Memo"},
+    "date_format":"iso","decimal_mark":".","amount_mode":"signed","invert":false,"default_account":"Main","default_currency":"USD","delimiter":",","encoding":"utf-8-sig"
+  },
+  "options": {"day_window":3,"trust_ids":true},
+  "decisions": {}
+}
